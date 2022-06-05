@@ -80,19 +80,9 @@ class Gameboard {
   }
 
   checkAllShipsSunk() {
-    const grid = this.getGrid();
-    // Iterate over each column in grid
-    for (let i = 0; i < 10; i += 1) {
-      for (let j = 0; j < 10; j += 1) {
-        // Check if cell exists
-        if (grid[i][j]) {
-          if (!grid[i][j][0].getSunk()) {
-            return false;
-          }
-        }
-      }
-    }
-    return true;
+    // Condense all column cells into single array of ships
+    const grid = this.getGrid().flat().filter((cell) => typeof cell === 'object');
+    return grid.every((cell) => cell[0].getSunk() === true);
   }
 }
 
