@@ -1,4 +1,4 @@
-class Ship {
+export default class Ship {
   constructor(length) {
     this.length = length;
     this.rotated = false;

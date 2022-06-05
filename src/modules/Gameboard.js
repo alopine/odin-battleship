@@ -12,7 +12,7 @@ function createGrid() {
   return grid;
 }
 
-class Gameboard {
+export default class Gameboard {
   constructor(player) {
     this.player = player;
     this.grid = createGrid();

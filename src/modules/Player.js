@@ -1,4 +1,4 @@
-class Player {
+export default class Player {
   constructor(computer) {
     this.computer = computer;
     this.attacked = [];
