@@ -24,6 +24,10 @@ export default class Ship {
     this.sunk = false;
   }
 
+  getName() {
+    return this.name;
+  }
+
   getLength() {
     return this.length;
   }
@@ -43,7 +47,7 @@ export default class Ship {
 
   hit(number) {
     if (number <= this.hits.length) {
-      this.hits[number - 1] = true;
+      this.hits[number] = true;
     }
     this.isSunk();
     return this.hits;
@@ -58,5 +62,3 @@ export default class Ship {
     return this.sunk;
   }
 }
-
-module.exports = Ship;

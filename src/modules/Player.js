@@ -28,5 +28,3 @@ export default class Player {
     this.makeAttack(board, coordX, coordY);
   }
 }
-
-module.exports = Player;

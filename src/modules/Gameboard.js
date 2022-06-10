@@ -1,7 +1,11 @@
+import Ship from './Ship';
+
 function checkLength(startCoordX, startCoordY, endCoordX, endCoordY) {
-  return (startCoordX === endCoordX
-    ? endCoordY - startCoordY
-    : endCoordX - startCoordX) + 1;
+  return (
+    (startCoordX === endCoordX
+      ? endCoordY - startCoordY
+      : endCoordX - startCoordX) + 1
+  );
 }
 
 function createGrid() {
@@ -27,32 +31,41 @@ export default class Gameboard {
   }
 
   setGrid(coords, value) {
-    this.grid[coords[0]][coords[1]] = value;
+    this.getGrid()[coords[0]][coords[1]] = value;
   }
 
   checkGridCell(coordX, coordY) {
-    return (this.grid[coordX - 1][coordY - 1]);
+    return this.getGrid()[coordX][coordY];
   }
 
-  checkGridRow(startCoord, endCoord, anchor) {
-    for (let i = startCoord; i <= endCoord; i += 1) {
-      if (this.checkGridCell(i + 1, anchor + 1)) {
-        return true;
+  checkGridRow(rotated, startCoord, endCoord, anchor) {
+    try {
+      for (let i = startCoord; i <= endCoord; i += 1) {
+        if (rotated && this.checkGridCell(i, anchor)) {
+          return true;
+        }
+        if (!rotated && this.checkGridCell(anchor, i)) {
+          return true;
+        }
       }
+    } catch (error) {
+      return true;
     }
     return false;
   }
 
   placeShip(ship, startCoordX, startCoordY, endCoordX, endCoordY) {
     // Check if ship length matches length of coordinates
-    if (ship.getLength() === checkLength(startCoordX, startCoordY, endCoordX, endCoordY)) {
+    if (
+      ship.getLength() === checkLength(startCoordX, startCoordY, endCoordX, endCoordY)
+    ) {
       // Set start and end coordinates of ship based on rotation
-      const start = (ship.getRotated() ? startCoordX : startCoordY) - 1;
-      const end = (ship.getRotated() ? endCoordX : endCoordY) - 1;
-      const anchor = (ship.getRotated() ? startCoordY : startCoordX) - 1;
+      const start = ship.getRotated() ? startCoordX : startCoordY;
+      const end = ship.getRotated() ? endCoordX : endCoordY;
+      const anchor = ship.getRotated() ? startCoordY : startCoordX;
       // Check if all spaces are clear for ship placement
-      if (!this.checkGridRow(start, end, anchor)) {
-        let shipPos = 1;
+      if (!this.checkGridRow(ship.getRotated(), start, end, anchor)) {
+        let shipPos = 0;
         for (let i = start; i <= end; i += 1) {
           const coords = ship.getRotated() ? [i, anchor] : [anchor, i];
           this.setGrid(coords, [ship, shipPos]);
@@ -62,6 +75,50 @@ export default class Gameboard {
     }
   }
 
+  placeAllShips() {
+    const ships = [
+      'Carrier',
+      'Battleship',
+      'Destroyer',
+      'Submarine',
+      'Patrol Boat',
+    ];
+    ships.forEach((ship) => {
+      // Initialize new ship
+      const newShip = new Ship(ship);
+      // Randomly decide if ship is rotated
+      if (Math.floor(Math.random() * 2)) {
+        newShip.toggleRotated();
+      }
+      // Declare coordinates
+      let start;
+      let end;
+      let anchor;
+      let startCoordX;
+      let startCoordY;
+      let endCoordX;
+      let endCoordY;
+      let checkStart;
+      let checkEnd;
+      // Loop for generating coordinates
+      do {
+        start = Math.floor(Math.random() * (11 - newShip.getLength()));
+        end = start + newShip.getLength() - 1;
+        anchor = Math.floor(Math.random() * 10);
+        // Assign coordinates based on rotation
+        startCoordX = newShip.getRotated() ? start : anchor;
+        startCoordY = newShip.getRotated() ? anchor : start;
+        endCoordX = newShip.getRotated() ? end : anchor;
+        endCoordY = newShip.getRotated() ? anchor : end;
+        // Assign coordinates for checking function
+        checkStart = newShip.getRotated() ? startCoordX : startCoordY;
+        checkEnd = newShip.getRotated() ? endCoordX : endCoordY;
+      } while (this.checkGridRow(newShip.getRotated(), checkStart, checkEnd, anchor));
+      // Place ship
+      this.placeShip(newShip, startCoordX, startCoordY, endCoordX, endCoordY);
+    });
+  }
+
   receiveAttack(coordX, coordY) {
     const cell = this.checkGridCell(coordX, coordY);
     // Check if cell has already been attacked and missed
@@ -69,21 +126,21 @@ export default class Gameboard {
       // Check if ship exists
       if (cell) {
         // Check if ship has been hit and mark hit if not
-        if (!cell[0].getHits()[cell[1] - 1]) {
+        if (!cell[0].getHits()[cell[1]]) {
           cell[0].hit(cell[1]);
         }
       } else {
         // If not a ship and has not been hit, then mark miss
-        this.setGrid([coordX - 1, coordY - 1], 'miss');
+        this.setGrid([coordX, coordY], 'miss');
       }
     }
   }
 
   checkAllShipsSunk() {
     // Condense all column cells into single array of ships
-    const grid = this.getGrid().flat().filter((cell) => typeof cell === 'object');
+    const grid = this.getGrid()
+      .flat()
+      .filter((cell) => typeof cell === 'object');
     return grid.every((cell) => cell[0].getSunk() === true);
   }
 }
-
-module.exports = Gameboard;
