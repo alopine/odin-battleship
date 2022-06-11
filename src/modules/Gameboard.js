@@ -122,18 +122,19 @@ export default class Gameboard {
   receiveAttack(coordX, coordY) {
     const cell = this.checkGridCell(coordX, coordY);
     // Check if cell has already been attacked and missed
-    if (cell !== 'miss') {
-      // Check if ship exists
-      if (cell) {
-        // Check if ship has been hit and mark hit if not
-        if (!cell[0].getHits()[cell[1]]) {
-          cell[0].hit(cell[1]);
-        }
-      } else {
-        // If not a ship and has not been hit, then mark miss
+    switch (true) {
+      // Cell is empty
+      case (!cell):
         this.setGrid([coordX, coordY], 'miss');
-      }
+        break;
+      // Cell is a ship that has not been hit
+      case (cell !== 'miss' && !cell[0].getHits()[cell[1]]):
+        cell[0].hit(cell[1]);
+        break;
+      default:
+        return false;
     }
+    return true;
   }
 
   checkAllShipsSunk() {

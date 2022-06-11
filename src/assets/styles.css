@@ -11,7 +11,7 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-h1, h2, #message {
+h1, h2, .message {
   text-align: center;
 }
 
@@ -20,6 +20,10 @@ h1, h2, #message {
 #boards {
   display: flex;
   justify-content: space-around;
+}
+
+#boards>section {
+  width: 30vw;
 }
 
 .board {
@@ -61,8 +65,11 @@ h1, h2, #message {
   flex-direction: column;
 }
 
+/* || Game End Screen Styles */
 
-
+#gameEndScreen {
+  text-align: center;
+}
 
 .hidden {
   display: none;

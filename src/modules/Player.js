@@ -4,6 +4,10 @@ export default class Player {
     this.attacked = [];
   }
 
+  getComputer() {
+    return this.computer;
+  }
+
   makeAttack(board, coordX, coordY) {
     if (!this.attacked.includes(`(${coordX}, ${coordY})`)) {
       board.receiveAttack(coordX, coordY);
@@ -26,5 +30,6 @@ export default class Player {
   computerTurn(board) {
     const [coordX, coordY] = this.generateAttack();
     this.makeAttack(board, coordX, coordY);
+    return [coordX, coordY];
   }
 }
