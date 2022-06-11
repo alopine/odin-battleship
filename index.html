@@ -11,228 +11,35 @@
   </head>
   <body>
     <h1>Odin Battleship</h1>
-    <div class="hidden" id="message">
-      <h3>How to Play</h3>
-      <p>
-        On your turn, click a cell on your opponent's grid to take your shot.
-      </p>
-      <p>
-        If you sink your opponent's fleet of five ships before your opponent sinks yours, you win!
-      </p>
-    </div>
     <section id="boards">
-      <section>
+      <section id="playerSection">
         <h2>Player Board</h2>
-        <div class="board" id="playerBoard">
-          <div data-x="1" data-y="1"></div>
-          <div data-x="2" data-y="1"></div>
-          <div data-x="3" data-y="1"></div>
-          <div data-x="4" data-y="1"></div>
-          <div data-x="5" data-y="1"></div>
-          <div data-x="6" data-y="1"></div>
-          <div data-x="7" data-y="1"></div>
-          <div data-x="8" data-y="1"></div>
-          <div data-x="9" data-y="1"></div>
-          <div data-x="10" data-y="1"></div>
-          <div data-x="1" data-y="2"></div>
-          <div data-x="2" data-y="2"></div>
-          <div data-x="3" data-y="2"></div>
-          <div data-x="4" data-y="2"></div>
-          <div data-x="5" data-y="2"></div>
-          <div data-x="6" data-y="2"></div>
-          <div data-x="7" data-y="2"></div>
-          <div data-x="8" data-y="2"></div>
-          <div data-x="9" data-y="2"></div>
-          <div data-x="10" data-y="2"></div>
-          <div data-x="1" data-y="3"></div>
-          <div data-x="2" data-y="3"></div>
-          <div data-x="3" data-y="3"></div>
-          <div data-x="4" data-y="3"></div>
-          <div data-x="5" data-y="3"></div>
-          <div data-x="6" data-y="3"></div>
-          <div data-x="7" data-y="3"></div>
-          <div data-x="8" data-y="3"></div>
-          <div data-x="9" data-y="3"></div>
-          <div data-x="10" data-y="3"></div>
-          <div data-x="1" data-y="4"></div>
-          <div data-x="2" data-y="4"></div>
-          <div data-x="3" data-y="4"></div>
-          <div data-x="4" data-y="4"></div>
-          <div data-x="5" data-y="4"></div>
-          <div data-x="6" data-y="4"></div>
-          <div data-x="7" data-y="4"></div>
-          <div data-x="8" data-y="4"></div>
-          <div data-x="9" data-y="4"></div>
-          <div data-x="10" data-y="4"></div>
-          <div data-x="1" data-y="5"></div>
-          <div data-x="2" data-y="5"></div>
-          <div data-x="3" data-y="5"></div>
-          <div data-x="4" data-y="5"></div>
-          <div data-x="5" data-y="5"></div>
-          <div data-x="6" data-y="5"></div>
-          <div data-x="7" data-y="5"></div>
-          <div data-x="8" data-y="5"></div>
-          <div data-x="9" data-y="5"></div>
-          <div data-x="10" data-y="5"></div>
-          <div data-x="1" data-y="6"></div>
-          <div data-x="2" data-y="6"></div>
-          <div data-x="3" data-y="6"></div>
-          <div data-x="4" data-y="6"></div>
-          <div data-x="5" data-y="6"></div>
-          <div data-x="6" data-y="6"></div>
-          <div data-x="7" data-y="6"></div>
-          <div data-x="8" data-y="6"></div>
-          <div data-x="9" data-y="6"></div>
-          <div data-x="10" data-y="6"></div>
-          <div data-x="1" data-y="7"></div>
-          <div data-x="2" data-y="7"></div>
-          <div data-x="3" data-y="7"></div>
-          <div data-x="4" data-y="7"></div>
-          <div data-x="5" data-y="7"></div>
-          <div data-x="6" data-y="7"></div>
-          <div data-x="7" data-y="7"></div>
-          <div data-x="8" data-y="7"></div>
-          <div data-x="9" data-y="7"></div>
-          <div data-x="10" data-y="7"></div>
-          <div data-x="1" data-y="8"></div>
-          <div data-x="2" data-y="8"></div>
-          <div data-x="3" data-y="8"></div>
-          <div data-x="4" data-y="8"></div>
-          <div data-x="5" data-y="8"></div>
-          <div data-x="6" data-y="8"></div>
-          <div data-x="7" data-y="8"></div>
-          <div data-x="8" data-y="8"></div>
-          <div data-x="9" data-y="8"></div>
-          <div data-x="10" data-y="8"></div>
-          <div data-x="1" data-y="9"></div>
-          <div data-x="2" data-y="9"></div>
-          <div data-x="3" data-y="9"></div>
-          <div data-x="4" data-y="9"></div>
-          <div data-x="5" data-y="9"></div>
-          <div data-x="6" data-y="9"></div>
-          <div data-x="7" data-y="9"></div>
-          <div data-x="8" data-y="9"></div>
-          <div data-x="9" data-y="9"></div>
-          <div data-x="10" data-y="9"></div>
-          <div data-x="1" data-y="10"></div>
-          <div data-x="2" data-y="10"></div>
-          <div data-x="3" data-y="10"></div>
-          <div data-x="4" data-y="10"></div>
-          <div data-x="5" data-y="10"></div>
-          <div data-x="6" data-y="10"></div>
-          <div data-x="7" data-y="10"></div>
-          <div data-x="8" data-y="10"></div>
-          <div data-x="9" data-y="10"></div>
-          <div data-x="10" data-y="10"></div>
+        <div class="board" id="playerBoard"></div>
+        <div class="message">
+          <h3>Ship Legend</h3>
+          <p><strong>C:</strong> Carrier (5 spaces)</p>
+          <p><strong>B:</strong> Battleship (4 spaces)</p>
+          <p><strong>D:</strong> Destroyer (3 spaces)</p>
+          <p><strong>S:</strong> Submarine (3 spaces)</p>
+          <p><strong>P:</strong> Patrol Boat (2 spaces)</p>
         </div>
       </section>
-      <section class="hidden">
+      <section class="hidden" id="computerSection">
         <h2>Computer Board</h2>
-        <div class="board" id="computerBoard">
-          <div data-x="1" data-y="1"></div>
-          <div data-x="2" data-y="1"></div>
-          <div data-x="3" data-y="1"></div>
-          <div data-x="4" data-y="1"></div>
-          <div data-x="5" data-y="1"></div>
-          <div data-x="6" data-y="1"></div>
-          <div data-x="7" data-y="1"></div>
-          <div data-x="8" data-y="1"></div>
-          <div data-x="9" data-y="1"></div>
-          <div data-x="10" data-y="1"></div>
-          <div data-x="1" data-y="2"></div>
-          <div data-x="2" data-y="2"></div>
-          <div data-x="3" data-y="2"></div>
-          <div data-x="4" data-y="2"></div>
-          <div data-x="5" data-y="2"></div>
-          <div data-x="6" data-y="2"></div>
-          <div data-x="7" data-y="2"></div>
-          <div data-x="8" data-y="2"></div>
-          <div data-x="9" data-y="2"></div>
-          <div data-x="10" data-y="2"></div>
-          <div data-x="1" data-y="3"></div>
-          <div data-x="2" data-y="3"></div>
-          <div data-x="3" data-y="3"></div>
-          <div data-x="4" data-y="3"></div>
-          <div data-x="5" data-y="3"></div>
-          <div data-x="6" data-y="3"></div>
-          <div data-x="7" data-y="3"></div>
-          <div data-x="8" data-y="3"></div>
-          <div data-x="9" data-y="3"></div>
-          <div data-x="10" data-y="3"></div>
-          <div data-x="1" data-y="4"></div>
-          <div data-x="2" data-y="4"></div>
-          <div data-x="3" data-y="4"></div>
-          <div data-x="4" data-y="4"></div>
-          <div data-x="5" data-y="4"></div>
-          <div data-x="6" data-y="4"></div>
-          <div data-x="7" data-y="4"></div>
-          <div data-x="8" data-y="4"></div>
-          <div data-x="9" data-y="4"></div>
-          <div data-x="10" data-y="4"></div>
-          <div data-x="1" data-y="5"></div>
-          <div data-x="2" data-y="5"></div>
-          <div data-x="3" data-y="5"></div>
-          <div data-x="4" data-y="5"></div>
-          <div data-x="5" data-y="5"></div>
-          <div data-x="6" data-y="5"></div>
-          <div data-x="7" data-y="5"></div>
-          <div data-x="8" data-y="5"></div>
-          <div data-x="9" data-y="5"></div>
-          <div data-x="10" data-y="5"></div>
-          <div data-x="1" data-y="6"></div>
-          <div data-x="2" data-y="6"></div>
-          <div data-x="3" data-y="6"></div>
-          <div data-x="4" data-y="6"></div>
-          <div data-x="5" data-y="6"></div>
-          <div data-x="6" data-y="6"></div>
-          <div data-x="7" data-y="6"></div>
-          <div data-x="8" data-y="6"></div>
-          <div data-x="9" data-y="6"></div>
-          <div data-x="10" data-y="6"></div>
-          <div data-x="1" data-y="7"></div>
-          <div data-x="2" data-y="7"></div>
-          <div data-x="3" data-y="7"></div>
-          <div data-x="4" data-y="7"></div>
-          <div data-x="5" data-y="7"></div>
-          <div data-x="6" data-y="7"></div>
-          <div data-x="7" data-y="7"></div>
-          <div data-x="8" data-y="7"></div>
-          <div data-x="9" data-y="7"></div>
-          <div data-x="10" data-y="7"></div>
-          <div data-x="1" data-y="8"></div>
-          <div data-x="2" data-y="8"></div>
-          <div data-x="3" data-y="8"></div>
-          <div data-x="4" data-y="8"></div>
-          <div data-x="5" data-y="8"></div>
-          <div data-x="6" data-y="8"></div>
-          <div data-x="7" data-y="8"></div>
-          <div data-x="8" data-y="8"></div>
-          <div data-x="9" data-y="8"></div>
-          <div data-x="10" data-y="8"></div>
-          <div data-x="1" data-y="9"></div>
-          <div data-x="2" data-y="9"></div>
-          <div data-x="3" data-y="9"></div>
-          <div data-x="4" data-y="9"></div>
-          <div data-x="5" data-y="9"></div>
-          <div data-x="6" data-y="9"></div>
-          <div data-x="7" data-y="9"></div>
-          <div data-x="8" data-y="9"></div>
-          <div data-x="9" data-y="9"></div>
-          <div data-x="10" data-y="9"></div>
-          <div data-x="1" data-y="10"></div>
-          <div data-x="2" data-y="10"></div>
-          <div data-x="3" data-y="10"></div>
-          <div data-x="4" data-y="10"></div>
-          <div data-x="5" data-y="10"></div>
-          <div data-x="6" data-y="10"></div>
-          <div data-x="7" data-y="10"></div>
-          <div data-x="8" data-y="10"></div>
-          <div data-x="9" data-y="10"></div>
-          <div data-x="10" data-y="10"></div>
+        <div class="board" id="computerBoard"></div>
+        <div class="message">
+          <h3>How to Play</h3>
+          <p>
+            On your turn, click a cell on your opponent's grid to take your shot.
+          </p>
+          <p>
+            If you sink your opponent's fleet of five ships before your opponent
+            sinks yours, you win!
+          </p>
         </div>
       </section>
-      <section>
-        <h2>Select Ships</h2>
+      <section id="shipSelectionSection">
+        <h2>Place Your Ships</h2>
         <div id="shipSelection">
           <h3>Ship Placement Rules</h3>
           <p>
@@ -243,15 +50,17 @@
             ship can be hanging off the board.
           </p>
           <p>
-            After selecting a ship, press R to rotate it before placing it on the board.
+            After selecting a ship, press R to rotate it before placing it on
+            the board.
           </p>
-          <button id="selectCarrier">Carrier (5)</button>
-          <button id="selectBattleship">Battleship (4)</button>
-          <button id="selectDestroyer">Destroyer (3)</button>
-          <button id="selectSubmarine">Submarine (3)</button>
-          <button id="selectPatrolBoat">Patrol Boat (2)</button>
+          <button id="randomizeBoard">Randomize Placement</button>
+          <button id="startGame">Start Game</button>
         </div>
       </section>
+    </section>
+    <section class="hidden" id="gameEndScreen">
+      <h1 id="winnerMessage"></h1>
+      <button id="restartGame">Play Again?</button>
     </section>
   </body>
 </html>
