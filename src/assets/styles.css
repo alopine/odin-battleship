@@ -37,6 +37,9 @@ h1, h2, .message {
 }
 
 .board>div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
   border-left: 1px solid var(--board-color);
@@ -65,9 +68,54 @@ h1, h2, .message {
   flex-direction: column;
 }
 
+#shipHover {
+  pointer-events: none;
+  position: fixed;
+  background-color: var(--ship-color);
+  left: 0px;
+  top: 0px;
+  z-index: 9;
+  display: flex;
+  border-right: 1px solid var(--board-color);
+  border-bottom: 1px solid var(--board-color);
+}
+
+.shipHoverCol {
+  flex-direction: column;
+}
+
+.shipHoverCell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3vw;
+  width: 3vw;
+  border-left: 1px solid var(--board-color);
+  border-top: 1px solid var(--board-color);
+}
+
 /* || Game End Screen Styles */
 
-#gameEndScreen {
+.modalContainer {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #000;
+  background-color: #00000080;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalBox {
+  background-color: #fff;
+  width: 30%;
+  padding: 1rem;
+  border-radius: 10px;
   text-align: center;
 }
 

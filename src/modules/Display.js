@@ -20,6 +20,7 @@ export default class Display {
             const cell = playerBoard.querySelector(`[data-x="${i}"][data-y="${j}"]`);
             cell.classList.add('ship');
             cell.innerText = grid[i][j][0].getName().charAt(0);
+            cell.dataset.ship = cell.innerText;
           }
         }
       }
@@ -41,27 +42,56 @@ export default class Display {
   static renderCell(board, x, y, result) {
     const boardID = board.player.getComputer() ? 'computerBoard' : 'playerBoard';
     const cellClass = typeof result === 'object' ? 'hit' : 'miss';
-    document.getElementById(boardID).querySelector(`[data-x="${x}"][data-y="${y}"]`).classList.add(cellClass);
-    // If computer board and result was hit
-    // Get name of ship from board coordinates
-    // Take first letter
-    // Put into innerText of cell
+    const cell = document.getElementById(boardID).querySelector(`[data-x="${x}"][data-y="${y}"]`);
+    cell.classList.add(cellClass);
+    if (boardID === 'computerBoard' && cellClass === 'hit') {
+      const shipName = board.checkGridCell(x, y)[0].getName();
+      cell.innerText = shipName.charAt(0);
+    }
   }
 
   static endGame(won) {
-    document.getElementById('playerSection').classList.add('hidden');
-    document.getElementById('computerSection').classList.add('hidden');
     document.getElementById('winnerMessage').innerText = won ? 'You won!' : 'You lost!';
     document.getElementById('gameEndScreen').classList.remove('hidden');
   }
 
   static restartGame() {
     document.getElementById('gameEndScreen').classList.add('hidden');
-    document.getElementById('playerSection').classList.remove('hidden');
+    document.getElementById('computerSection').classList.add('hidden');
     document.getElementById('shipSelectionSection').classList.remove('hidden');
   }
 
-  // Placing ship
-    // After clicking and selecting a shift, erase where the previous row of divs was
-    // Have the same set of divs hovering on mouse
+  static renderShipPlacementHover(shipChar, ship) {
+    // Clear original cells of selected ship
+    const playerBoard = document.getElementById('playerBoard');
+    const shipCells = playerBoard.querySelectorAll(`[data-ship="${shipChar}"]`);
+    shipCells.forEach((shipCell) => {
+      const cell = shipCell;
+      delete cell.dataset.ship;
+      cell.innerHTML = '';
+      cell.classList.remove('ship');
+    });
+    // Create ship selection hover
+    const shipHover = document.createElement('div');
+    shipHover.id = 'shipHover';
+    if (!ship.getRotated()) {
+      shipHover.classList.add('shipHoverCol');
+    }
+    const length = ship.getLength();
+    for (let i = 0; i < length; i += 1) {
+      const cell = document.createElement('div');
+      cell.classList.add('shipHoverCell');
+      cell.innerText = shipChar;
+      shipHover.appendChild(cell);
+    }
+    document.body.appendChild(shipHover);
+  }
+
+  static removeShipPlacementHover() {
+    document.getElementById('shipHover').remove();
+  }
+
+  static toggleShipHoverRotation() {
+    document.getElementById('shipHover').classList.toggle('shipHoverCol');
+  }
 }

@@ -38,14 +38,24 @@ export default class Gameboard {
     return this.getGrid()[coordX][coordY];
   }
 
-  checkGridRow(rotated, startCoord, endCoord, anchor) {
+  checkGridRow(ship, startCoord, endCoord, anchor) {
+    if (startCoord > 9 || endCoord > 9 || anchor > 9) {
+      return true;
+    }
+    const rotated = ship.getRotated();
     try {
       for (let i = startCoord; i <= endCoord; i += 1) {
         if (rotated && this.checkGridCell(i, anchor)) {
-          return true;
+          if (this.checkGridCell(i, anchor)[0] !== ship) {
+            console.log('obstruction');
+            return true;
+          }
         }
         if (!rotated && this.checkGridCell(anchor, i)) {
-          return true;
+          if (this.checkGridCell(anchor, i)[0] !== ship) {
+            console.log('obstruction');
+            return true;
+          }
         }
       }
     } catch (error) {
@@ -59,12 +69,13 @@ export default class Gameboard {
     if (
       ship.getLength() === checkLength(startCoordX, startCoordY, endCoordX, endCoordY)
     ) {
+      console.log(this.getGrid());
       // Set start and end coordinates of ship based on rotation
       const start = ship.getRotated() ? startCoordX : startCoordY;
       const end = ship.getRotated() ? endCoordX : endCoordY;
       const anchor = ship.getRotated() ? startCoordY : startCoordX;
       // Check if all spaces are clear for ship placement
-      if (!this.checkGridRow(ship.getRotated(), start, end, anchor)) {
+      if (!this.checkGridRow(ship, start, end, anchor)) {
         let shipPos = 0;
         for (let i = start; i <= end; i += 1) {
           const coords = ship.getRotated() ? [i, anchor] : [anchor, i];
@@ -113,10 +124,34 @@ export default class Gameboard {
         // Assign coordinates for checking function
         checkStart = newShip.getRotated() ? startCoordX : startCoordY;
         checkEnd = newShip.getRotated() ? endCoordX : endCoordY;
-      } while (this.checkGridRow(newShip.getRotated(), checkStart, checkEnd, anchor));
+      } while (this.checkGridRow(newShip, checkStart, checkEnd, anchor));
       // Place ship
       this.placeShip(newShip, startCoordX, startCoordY, endCoordX, endCoordY);
     });
+  }
+
+  moveShip(ship, coords) {
+    const startCoordX = coords[0];
+    const startCoordY = coords[1];
+    const start = ship.getRotated() ? startCoordX : startCoordY;
+    const end = (ship.getRotated() ? startCoordX : startCoordY) + ship.getLength() - 1;
+    const anchor = ship.getRotated() ? startCoordY : startCoordX;
+    const endCoordX = ship.getRotated() ? end : startCoordX;
+    const endCoordY = ship.getRotated() ? startCoordY : end;
+    if (!this.checkGridRow(ship, start, end, anchor)) {
+      this.getGrid().forEach((row) => {
+        row.forEach((cell, j) => {
+          if (cell) {
+            if (cell[0] === ship) {
+              row.splice(j, 1, null);
+            }
+          }
+        });
+      });
+      this.placeShip(ship, startCoordX, startCoordY, endCoordX, endCoordY);
+      return true;
+    }
+    return false;
   }
 
   receiveAttack(coordX, coordY) {
