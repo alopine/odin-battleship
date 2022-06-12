@@ -32,6 +32,7 @@ export default class Events {
 
   static addListeners() {
     this.addPlayerBoardListener();
+    this.addPlayerShipHoverListener();
     this.addRandomizeListener();
     this.addStartGameListener();
     this.addComputerBoardListener();
@@ -50,7 +51,6 @@ export default class Events {
             shipMouseHover = true;
             shipMove = ship;
             Display.renderShipPlacementHover(cell.innerText, ship);
-            this.addPlayerShipHoverListener(ship);
             // Upon clicking, set hover to mouse location
             const shipHover = document.getElementById('shipHover');
             shipHover.style.left = `${e.clientX}px`;
@@ -58,7 +58,6 @@ export default class Events {
           } else if (!cell.classList.contains('ship') && shipMouseHover) {
             playerBoard.moveShip(shipMove, [Number.parseInt(x, 10), Number.parseInt(y, 10)]);
             Display.removeShipPlacementHover();
-            this.removePlayerShipHoverListener(shipMove);
             shipMouseHover = false;
             Display.clearBoards();
             Display.createBoard(document.getElementById('playerBoard'));
@@ -71,38 +70,23 @@ export default class Events {
 
   // TODO: Find a way to remove duplicate listeners
 
-  static addPlayerShipHoverListener(ship) {
-    document.addEventListener('mousemove', this.playerShipHoverEvent);
-    document.addEventListener('keydown', this.playerShipRotateEvent);
-  }
-
-  static removePlayerShipHoverListener(ship) {
-    document.removeEventListener('mousemove', (e) => {
-      this.playerShipHoverEvent(e);
-    });
-    document.removeEventListener('keydown', (e) => {
-      this.playerShipRotateEvent(e, ship);
-    });
-    console.log('removed');
-  }
-
-  static playerShipHoverEvent(e) {
-    const shipHover = document.getElementById('shipHover');
-    if (shipHover) {
-      shipHover.style.left = `${e.clientX}px`;
-      shipHover.style.top = `${e.clientY}px`;
-    }
-  }
-
-  static playerShipRotateEvent(e, ship) {
-    if (e.code === 'KeyR') {
+  static addPlayerShipHoverListener() {
+    document.addEventListener('mousemove', (e) => {
       const shipHover = document.getElementById('shipHover');
       if (shipHover) {
-        ship.toggleRotated();
-        Display.toggleShipHoverRotation();
-        console.log('toggled');
+        shipHover.style.left = `${e.clientX}px`;
+        shipHover.style.top = `${e.clientY}px`;
       }
-    }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'KeyR') {
+        const shipHover = document.getElementById('shipHover');
+        if (shipHover) {
+          shipMove.toggleRotated();
+          Display.toggleShipHoverRotation();
+        }
+      }
+    });
   }
 
   static addRandomizeListener() {

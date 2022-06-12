@@ -47,13 +47,11 @@ export default class Gameboard {
       for (let i = startCoord; i <= endCoord; i += 1) {
         if (rotated && this.checkGridCell(i, anchor)) {
           if (this.checkGridCell(i, anchor)[0] !== ship) {
-            console.log('obstruction');
             return true;
           }
         }
         if (!rotated && this.checkGridCell(anchor, i)) {
           if (this.checkGridCell(anchor, i)[0] !== ship) {
-            console.log('obstruction');
             return true;
           }
         }
@@ -69,7 +67,6 @@ export default class Gameboard {
     if (
       ship.getLength() === checkLength(startCoordX, startCoordY, endCoordX, endCoordY)
     ) {
-      console.log(this.getGrid());
       // Set start and end coordinates of ship based on rotation
       const start = ship.getRotated() ? startCoordX : startCoordY;
       const end = ship.getRotated() ? endCoordX : endCoordY;
