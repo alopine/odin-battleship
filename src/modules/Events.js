@@ -33,6 +33,7 @@ export default class Events {
     this.addRandomizeListener();
     this.addStartGameListener();
     this.addComputerBoardListener();
+    this.addRestartListener();
   }
 
   static addRandomizeListener() {
@@ -41,7 +42,6 @@ export default class Events {
     });
   }
 
-  // Start game listener
   static addStartGameListener() {
     document.getElementById('startGame').addEventListener('click', () => {
       Display.startGame();
@@ -58,12 +58,10 @@ export default class Events {
         cell.addEventListener('click', () => {
           const { x, y } = cell.dataset;
           if (
-            computerBoard.checkAllShipsSunk()
-            || playerBoard.checkAllShipsSunk()
+            !computerBoard.checkAllShipsSunk()
+            && !playerBoard.checkAllShipsSunk()
+            && computerBoard.receiveAttack(x, y)
           ) {
-            const won = computerBoard.checkAllShipsSunk();
-            Display.endGame(won);
-          } else if (computerBoard.receiveAttack(x, y)) {
             computerBoard.receiveAttack(x, y);
             Display.renderCell(
               computerBoard,
@@ -79,16 +77,22 @@ export default class Events {
               playerBoard.checkGridCell(coords[0], coords[1]),
             );
           }
+          if (
+            computerBoard.checkAllShipsSunk()
+            || playerBoard.checkAllShipsSunk()
+          ) {
+            const won = computerBoard.checkAllShipsSunk();
+            Display.endGame(won);
+          }
         });
       });
   }
 
-  // One turn is
-  // Player clicks (computerBoard.receiveAttack()) until either hit or miss
-  // Display render
-  // Computer board checks if all ship sunk
-  // If not, computer makes random attack on player board (computer.computerTurn(playerBoard);)
-  // Display render
-  // Player board checks if all ships sunk
-  // If not, back to start of loop
+  // Restart Game Listener
+  static addRestartListener() {
+    document.getElementById('restartGame').addEventListener('click', () => {
+      this.resetGame();
+      Display.restartGame();
+    });
+  }
 }

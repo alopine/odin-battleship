@@ -49,14 +49,16 @@ export default class Display {
   }
 
   static endGame(won) {
-    document.getElementById('boards').classList.add('hidden');
+    document.getElementById('playerSection').classList.add('hidden');
     document.getElementById('computerSection').classList.add('hidden');
     document.getElementById('winnerMessage').innerText = won ? 'You won!' : 'You lost!';
     document.getElementById('gameEndScreen').classList.remove('hidden');
   }
 
   static restartGame() {
-    // 
+    document.getElementById('gameEndScreen').classList.add('hidden');
+    document.getElementById('playerSection').classList.remove('hidden');
+    document.getElementById('shipSelectionSection').classList.remove('hidden');
   }
 
   // Placing ship
